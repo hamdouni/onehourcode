@@ -1,0 +1,1 @@
+[{"title":"lundi 8 décembre 2014 18h30","places":6},{"title":"mardi 9 décembre 2014 18h30","places":6},{"title":"mercredi 10 décembre 2014 14h30","places":6},{"title":"mercredi 10 décembre 2014 16h30","places":6},{"title":"mercredi 10 décembre 2014 18h30","places":6},{"title":"jeudi 11 décembre 2014 18h30","places":6},{"title":"vendredi 12 décembre 2014 18h30","places":6}]

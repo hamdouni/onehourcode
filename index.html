@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes"> 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+<script src="alight_0.7.4.min.js"></script>
+<script src="zepto.min.js"></script>
+</head>
+<body al-app="app">
+
+<div class"page-header">
+<h1>Une heure de code
+<small>Choissisez la date</small>
+</h1>
+</div>
+<div class="list-group">
+<span al-repeat="item in list"><a href="#" class="list-group-item">{{item.title}} <span class="badge">{{item.places}}</span></a></span>
+</div>
+
+<script language="javascript">
+var theList = [];
+$.get('list.txt', function(data) {
+	theList = JSON.parse(data);
+});
+
+function app(scope) {
+	$.get('list.txt', function(data) {
+		scope.list = JSON.parse(data);
+		scope.$scan(); // force rescan after retrieving data (caused by async call)
+	});
+}
+</script>
+
+</body>
+</html>
