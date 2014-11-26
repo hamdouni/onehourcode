@@ -12,11 +12,12 @@
 </head>
 <body al-app="app">
 
+<div al-show="beginIsVisible">
 <div class="container" id="main" al-show="!formIsVisible">
 	<div class"page-header"> <h1>Une heure de code</h1> </div>
 	<div class="list-group">
 		<span class="list-group-item">Choissisez la date <span class="badge" title="places restantes">?</span></span>
-		<span al-repeat="item in list"><a al-click="choose(item)" href="#" class="list-group-item">{{item.title}} <span class="badge" title="{{item.places}} places restantes">{{item.places}}</span></a></span>
+		<span al-repeat="item in list"><a al-css="disabled: item.places<=0" al-disable="item.places<=0" al-click="choose(item)" href="#" class="list-group-item">{{item.title}} <span class="badge" title="{{item.places}} places restantes">{{item.places}}</span></a></span>
 	</div>
 </div>
 <div class="container" id="form" al-show="formIsVisible">
@@ -30,18 +31,20 @@
 		<input type="hidden" name="date" value="{{selectedDate}}">
 		<div class="form-group">
 			<label for="name">Prénom et nom</label>
-			<input al-value="name" type="text" class="form-control" id="name" placeholder="Qui êtes vous?">
+			<input al-value="name" type="text" class="form-control" name="name" id="name" placeholder="Qui êtes vous?">
 		</div>
 		<div class="form-group">
 			<label for="email">Email</label>
-			<input al-value="email" type="email" class="form-control" id="email" placeholder="vous@adresse.fr">
+			<input al-value="email" type="email" class="form-control" name="email" id="email" placeholder="vous@adresse.fr">
 		</div>
 		<button al-click="cancel()" class="btn btn-lnk pull-left">Annuler</button> <button class="btn btn-primary pull-right">Je confirme le {{selectedDate}}</button>
 	</form>
 </div>
+</div>
 <div class="container" id="thank" al-show="thankIsVisible">
 	<div class="alert alert-success" role="alert">	<h1> Merci ! C'est enregistré. Je vous recontacte rapidement.</h1> </div>
 </div>
+<a href="#" al-click="debug()">debug</a>
 
 <script language="javascript">
 	var theList = [];
@@ -55,6 +58,7 @@
 			scope.$scan(); // force rescan after retrieving data (caused by async call)
 		});
 		
+		scope.beginIsVisible = true;
 		scope.formIsVisible = false;
 		scope.errorIsVisible = false;
 		scope.name = "";
@@ -73,11 +77,25 @@
 				scope.errorMessage = "L'email n'est pas valide.";
 				scope.errorIsVisible = true;
 			} else {
-				scope.errorIsVisible = false;
+				scope.beginIsVisible = false;
 				scope.thankIsVisible = true;
-				$.post('save.php', $('#theForm').serialize'), function(res) {
+				for ( var key in scope.list ) {
+					var obj = scope.list[key];
+					if ( obj['title'] == scope.selectedDate ) {
+						scope.list[key] = { title: scope.selectedDate, places: obj['places'] - 1 };
+					}
+				}
+				$.post('save.php', { list: JSON.stringify(scope.list), name: scope.name, email: scope.email, date: scope.selectedDate }, function(res) {
 					console.log(res);
 				});
+
+			}
+		}
+
+		scope.debug = function() {
+			for ( var key in scope.list ) {
+				var obj = scope.list[key];
+				console.log(key + ":" + obj['title'] + "," + obj['places']);
 			}
 		}
 	}
