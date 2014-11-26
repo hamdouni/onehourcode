@@ -16,7 +16,7 @@
 <div class="container" id="main" al-show="!formIsVisible">
 	<div class"page-header"> <h1>Une heure de code</h1> </div>
 	<div class="list-group">
-		<span class="list-group-item">Choissisez la date <span class="badge" title="places restantes">?</span></span>
+		<h2 class="list-group-item">Choissisez la date <span class="badge" title="places restantes">?</span></h2>
 		<span al-repeat="item in list"><a al-css="disabled: item.places<=0" al-disable="item.places<=0" al-click="choose(item)" href="#" class="list-group-item">{{item.title}} <span class="badge" title="{{item.places}} places restantes">{{item.places}}</span></a></span>
 	</div>
 </div>
