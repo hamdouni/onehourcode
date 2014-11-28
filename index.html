@@ -11,6 +11,14 @@
 <style></style>
 </head>
 <body al-app="app">
+<!--[if lt IE 9]>
+<div class="alert alert-danger" role="alert">
+  <h1>Votre version d'Internet Explorer est obsolète.</h1>
+  <p>Si vous êtes en entreprise, faites le depuis la maison : les outils y sont plus à jour.</p>
+  <p>Vous pouvez aussi faire ça à partir de votre smartphone !</p>
+</div>
+<style>#main,#form,#thank{display:none}</style>
+<![endif]-->
 
 <div al-show="beginIsVisible">
 <div class="container" id="main" al-show="!formIsVisible">
